@@ -3,9 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-pdf-viewer/thumbnail": "^2.7.1",
+    "axios": "^0.21.1",
+    "firebase": "^8.8.1",
+    "pdf-viewer-reactjs": "^2.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3"
+    "react-icons": "^4.2.0",
+    "react-modal": "^3.14.3",
+    "react-pdf": "^5.3.2",
+    "react-pdf-thumbnail": "^0.1.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "styled-components": "^5.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
