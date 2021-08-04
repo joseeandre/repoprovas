@@ -147,7 +147,6 @@ const ItemsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
-
   a {
       margin-top: 10px;
   }
