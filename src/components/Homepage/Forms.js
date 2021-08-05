@@ -5,7 +5,8 @@ import axios from 'axios';
 import { IconContext } from "react-icons";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import UserContext from '../../contexts/UserContext';
-import { auth, storage, db } from "../../firebase"
+import { auth, storage, db } from "../../firebase";
+import Loading from "./Loading";
 
 export default function Forms(props) {
     const { render, setRender, setModalNew } = props;
@@ -18,6 +19,7 @@ export default function Forms(props) {
     const [file, setFile] = useState("");
     const [category, setCategory] = useState("");
     const [disciplines, setDisciplines] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const categories = ["P1", "P2", "P3", "2ch", "Outras"];
     let { clientInformations, isLogged, setClientInformations, setIsLogged } = useContext(UserContext);
@@ -46,6 +48,7 @@ export default function Forms(props) {
         e.preventDefault();
 
         const body = { name, discipline, category, teacher, fileName: file.name };
+        setIsLoading(true);
         const request = axios.post("https://repoprovas-db.herokuapp.com/upload", body, config);
         request.then(reply => {
             const fileRef = storage.ref().child(file.name);
@@ -56,6 +59,7 @@ export default function Forms(props) {
                     setRender([1]);
                 }
                 setModalNew(false);
+                setIsLoading(false);
                 alert("ok!");
             }).catch(error => {
                 console.log(error);
@@ -131,7 +135,7 @@ export default function Forms(props) {
                             onChange={(e) => setFile(e.target.files[0])}
                             accept="application/pdf"
                         ></input>
-                        <Button className="button">Submmit</Button>
+                        <Button className="button">{isLoading ? <Loading />:"Submmit"}</Button>
                     </Form>
                 </TestArea>
             </Content>
@@ -152,9 +156,8 @@ const Hole = styled.div`
 const Content = styled.div`
     display: flex;
     justify-content: center;
-   
-    
 `
+
 const TestArea = styled.div`
     width: 50%;
     display: flex;
