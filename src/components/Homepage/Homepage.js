@@ -10,6 +10,7 @@ import Modal from "react-modal";
 import Forms from "./Forms";
 import { storage } from "../../firebase";
 import Links from "./Links";
+import Loading from "./Loading";
 
 export default function Homepage() {
   const history = useHistory();
@@ -89,10 +90,9 @@ export default function Homepage() {
       config
     );
     request.then((reply) => {
-      setClientInformations(null);
+      history.push("/");
       localStorage.removeItem("clientInformations");
       setIsLogged(false);
-      history.push("/");
     });
     request.catch((error) => {
       console.log(error);

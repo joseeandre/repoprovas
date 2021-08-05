@@ -5,6 +5,7 @@ import axios from 'axios';
 import { IconContext } from "react-icons";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import UserContext from '../../contexts/UserContext';
+import Loading from "../Homepage/Loading";
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
@@ -15,6 +16,7 @@ export default function SignIn() {
     const [passwordRefColor, setPasswordRefColor] = useState(false);
     const [error, setError] = useState(false);
     const [shakeOnError, setShakeOnError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [visibility, setVisibility] = useState(false);
     const history = useHistory();
     const { isLogged, clientInformations, setIsLogged, setClientInformations } = useContext(UserContext);
@@ -22,12 +24,14 @@ export default function SignIn() {
     function signIn(e) {
         e.preventDefault();
         setShakeOnError(false);
+        setIsLoading(true);
         const body = { email, password };
         const request = axios.post("https://repoprovas-db.herokuapp.com/sign-in", body);
         request.then(reply => {
             localStorage.setItem("clientInformations", JSON.stringify(reply.data));
             setClientInformations(reply.data)
             setIsLogged(true)
+            setIsLoading(false);
             history.push('/home')
         })
         request.catch(() => {
@@ -85,7 +89,7 @@ export default function SignIn() {
                                     <IoEyeOff onClick={() => setVisibility(false)} ></IoEyeOff>
                                 </IconContext.Provider>
                             </InputHolder>
-                            <Button>Sign In</Button>
+                            <Button>{isLoading ? <Loading />:"Sign In"}</Button>
                             <SignUpLink to="/sign-up" >First time? Create an account!</SignUpLink>
                         </Form>
                     </LoginArea>

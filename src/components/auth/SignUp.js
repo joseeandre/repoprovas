@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { IconContext } from "react-icons";
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import Loading from "../Homepage/Loading";
 
 export default function SignUp() {
     const [name, setName] = useState('');
@@ -23,6 +24,7 @@ export default function SignUp() {
     const [emailError, setEmailError] = useState(false);
     const [shakeOnEmailError, setShakeOnEmailError] = useState(false);
     const [visibility, setVisibility] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
     function signUp(e) {
@@ -36,11 +38,13 @@ export default function SignUp() {
             setEmailError(false);
             return;
         }
+        setIsLoading(true);
 
         const body = { name, email, password, confirmPassword };
         const request = axios.post("https://repoprovas-db.herokuapp.com/sign-up", body);
         request.then(reply => {
             history.push('/');
+            setIsLoading(false);
 
         })
         request.catch((error) => {
@@ -145,7 +149,7 @@ export default function SignUp() {
                             }} id="confirm-password" type={visibility ? "text" : "password"} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
                             <PasswordsMatch passwordError={passwordError}>passwords don't match</PasswordsMatch>
                         </InputHolder>
-                        <Button>Sign Up</Button>
+                        <Button>{isLoading ? <Loading />:"Sign Up"}</Button>
                         <LoginLink to="/" >Already a client? Login into your account!</LoginLink>
                     </Form>
                 </SignUpArea>
