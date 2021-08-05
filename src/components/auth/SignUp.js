@@ -51,6 +51,7 @@ export default function SignUp() {
             setEmailError(true);
             setShakeOnEmailError(true);
             setPasswordError(false);
+            setIsLoading(false);
             console.log(error);
         })
     }

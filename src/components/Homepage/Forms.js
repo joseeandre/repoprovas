@@ -63,10 +63,12 @@ export default function Forms(props) {
                 alert("ok!");
             }).catch(error => {
                 console.log(error);
+                setIsLoading(false);
             })
         })
         request.catch(error => {
             console.log(error);
+            setIsLoading(false);
         })
     }
 

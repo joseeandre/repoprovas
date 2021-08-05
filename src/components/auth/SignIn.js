@@ -37,6 +37,7 @@ export default function SignIn() {
         request.catch(() => {
             setError(true);
             setShakeOnError(true);
+            setIsLoading(false);
         })
     }
 
